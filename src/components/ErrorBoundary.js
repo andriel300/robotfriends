@@ -1,23 +1,21 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 
-class ErrorBoundary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hasError: false,
-    };
-  }
+const ErrorBoundary = ({ children }) => {
+  const [hasError, setHasError] = useState(false);
 
-  componentDidCatch(error, info) {
-    this.setState({ hasError: true });
-  }
+  const componentDidCatch = (error, info) => {
+    setHasError(true);
+  };
 
-  render() {
-    if (this.state.hasError) {
-      return <h1>Oooops. That is not good</h1>;
-    }
-    return this.props.children;
+  if (hasError) {
+    return <h1>Oooops. That is not good</h1>;
   }
-}
+  return children;
+};
+
+ErrorBoundary.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default ErrorBoundary;
