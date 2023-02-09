@@ -20,7 +20,9 @@ const App = () => {
     setSearchfield(event.target.value);
   };
 
-  const filteredRobots = robots.filter((robot) => robot.name.toLowerCase().includes(searchfield.toLowerCase()));
+  const filteredRobots = robots.filter((robot) =>
+    robot.name.toLowerCase().includes(searchfield.toLowerCase())
+  );
   return !robots.length ? (
     <h1>Loading</h1>
   ) : (
