@@ -3,18 +3,19 @@ import axios from "axios";
 import CardList from "../components/CardList";
 import SearchBox from "../components/SearchBox";
 import Scroll from "../components/Scroll";
-import ErrorBoundary from "../components/ErrorBoundary";
 import "./App.css";
 
 const App = () => {
   const [robots, setRobots] = useState([]);
   const [searchfield, setSearchfield] = useState("");
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     axios.get("https://jsonplaceholder.typicode.com/users").then((response) => {
       setRobots(response.data);
     });
-  }, []);
+    console.log("🚀 ~ file: App.js:12 ~ App ~ count", count);
+  }, [count]);
 
   const onSearchChange = (event) => {
     setSearchfield(event.target.value);
@@ -28,11 +29,10 @@ const App = () => {
   ) : (
     <div className="tc">
       <h1 className="f1">RoboFriends</h1>
+      <button onClick={() => setCount(count + 1)}>Click Me!</button>{" "}
       <SearchBox searchChange={onSearchChange} />
       <Scroll>
-        <ErrorBoundary>
-          <CardList robots={filteredRobots} />
-        </ErrorBoundary>
+        <CardList robots={filteredRobots} />
       </Scroll>
     </div>
   );
